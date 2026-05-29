@@ -80,6 +80,13 @@ thumap 已加入 GitHub Pages 的 static export 設定，適合部署到：
 - 將 Source 設為 GitHub Actions。
 - 當 main 分支有新 commit push 後，workflow 會自動執行部署。
 
+如果第一次執行 workflow 時出現 `Get Pages site failed` 或 `Error: Not Found`，代表這個 repository 的 GitHub Pages site 還沒有建立。可以用以下任一方式處理：
+
+- 最簡單的方式：手動到 GitHub repository 的 Settings → Pages，將 Source 設為 GitHub Actions。
+- 自動化方式：新增 repository secret `PAGES_ENABLEMENT_TOKEN`，讓 workflow 在第一次執行時自動建立 Pages site。
+
+`PAGES_ENABLEMENT_TOKEN` 需使用 `GITHUB_TOKEN` 以外的 token。若使用 Personal Access Token，需具備 `repo` scope 或 Pages write 權限。
+
 本機測試方式：
 
 ```bash
