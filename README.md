@@ -87,6 +87,11 @@ thumap 已加入 GitHub Pages 的 static export 設定，適合部署到：
 
 `PAGES_ENABLEMENT_TOKEN` 需使用 `GITHUB_TOKEN` 以外的 token。若使用 Personal Access Token，需具備 `repo` scope 或 Pages write 權限。
 
+目前 workflow 的行為如下：
+
+- 若存在 `PAGES_ENABLEMENT_TOKEN`，會執行 `actions/configure-pages@v5` 並嘗試自動建立 Pages site。
+- 若沒有這個 secret，workflow 會略過 `configure-pages`，因此需要先手動完成 Settings → Pages → GitHub Actions 的一次性設定。
+
 本機測試方式：
 
 ```bash

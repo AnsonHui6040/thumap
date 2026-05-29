@@ -24,10 +24,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configure GitHub Pages
+        if: ${{ secrets.PAGES_ENABLEMENT_TOKEN != '' }}
         uses: actions/configure-pages@v5
         with:
-          token: ${{ secrets.PAGES_ENABLEMENT_TOKEN != '' && secrets.PAGES_ENABLEMENT_TOKEN || github.token }}
-          enablement: ${{ secrets.PAGES_ENABLEMENT_TOKEN != '' }}
+          token: ${{ secrets.PAGES_ENABLEMENT_TOKEN }}
+          enablement: true
+
+      - name: Pages setup note
+        if: ${{ secrets.PAGES_ENABLEMENT_TOKEN == '' }}
+        run: |
+          echo "GitHub Pages auto-enable is skipped because PAGES_ENABLEMENT_TOKEN is not set."
+          echo "Ensure Settings > Pages > Source is already configured to GitHub Actions."
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
