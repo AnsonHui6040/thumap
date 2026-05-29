@@ -18,23 +18,44 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PAGES_ENABLEMENT_TOKEN: ${{ secrets.PAGES_ENABLEMENT_TOKEN }}
+      PAGES_ENABLEMENT_TOKEN_PRESENT: ${{ secrets.PAGES_ENABLEMENT_TOKEN != '' }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Configure GitHub Pages
-        if: ${{ secrets.PAGES_ENABLEMENT_TOKEN != '' }}
+        if: env.PAGES_ENABLEMENT_TOKEN_PRESENT == 'true'
         uses: actions/configure-pages@v5
         with:
-          token: ${{ secrets.PAGES_ENABLEMENT_TOKEN }}
+          token: ${{ env.PAGES_ENABLEMENT_TOKEN }}
           enablement: true
 
       - name: Pages setup note
-        if: ${{ secrets.PAGES_ENABLEMENT_TOKEN == '' }}
+        if: env.PAGES_ENABLEMENT_TOKEN_PRESENT != 'true'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
         run: |
           echo "GitHub Pages auto-enable is skipped because PAGES_ENABLEMENT_TOKEN is not set."
-          echo "Ensure Settings > Pages > Source is already configured to GitHub Actions."
+          echo "Checking whether the Pages site is already enabled for ${REPOSITORY}..."
+
+          http_code=$(curl -sS -o /tmp/pages-site.json -w "%{http_code}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            "https://api.github.com/repos/${REPOSITORY}/pages")
+
+          if [ "$http_code" = "200" ]; then
+            echo "GitHub Pages is already enabled."
+            exit 0
+          fi
+
+          echo "GitHub Pages is not enabled yet for ${REPOSITORY}."
+          echo "Open Settings > Pages > Source and set GitHub Actions, or add the PAGES_ENABLEMENT_TOKEN secret."
+          cat /tmp/pages-site.json
+          exit 1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
