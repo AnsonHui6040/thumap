@@ -1,3 +1,4 @@
+import Link from "next/link";
 import BuildingSelector from "@/components/BuildingSelector";
 import { getBuildings } from "@/lib/data";
 
@@ -23,6 +24,82 @@ export default function HomePage() {
           <span className="rounded-full bg-white/85 px-3 py-2 shadow-sm">Dijkstra Routing Engine</span>
           <span className="rounded-full bg-white/85 px-3 py-2 shadow-sm">Chinese Turn-by-turn Guidance</span>
           <span className="rounded-full bg-white/85 px-3 py-2 shadow-sm">QR-style Start</span>
+        </div>
+      </section>
+
+      <section className="mt-8 grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(280px,0.9fr)]">
+        <div className="rounded-[32px] border border-[var(--line)] bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(240,248,245,0.88))] px-5 py-6 shadow-[0_24px_80px_rgba(15,23,42,0.06)] sm:px-8 sm:py-8">
+          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[var(--accent)]">
+            New Mobile-first Guide
+          </p>
+          <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight text-slate-900">
+            把校門、站牌、停車與室內導航接成同一條手機導覽流程
+          </h2>
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 md:text-base">
+            新增的手機導覽頁把校園總覽、室內帶路與交通選擇真正放進 thumap，先解決首次到校與外部交通資訊，再把使用者帶回現有 M 棟導航工作區。
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-2 text-sm font-medium text-slate-700">
+            <span className="rounded-full bg-white/85 px-3 py-2 shadow-sm">Campus Overview</span>
+            <span className="rounded-full bg-white/85 px-3 py-2 shadow-sm">Gate / Bus / Parking Handoff</span>
+            <span className="rounded-full bg-white/85 px-3 py-2 shadow-sm">Mobile-first UI</span>
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              href="/campus-guide"
+              className="inline-flex items-center justify-center rounded-full bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_26px_rgba(15,118,110,0.22)] transition duration-200 hover:bg-[var(--accent-strong)]"
+            >
+              查看手機導覽頁
+            </Link>
+            <Link
+              href="/map/M"
+              className="inline-flex items-center justify-center rounded-full border border-[var(--line)] bg-white/90 px-5 py-3 text-sm font-semibold text-slate-700 transition duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+            >
+              直接開啟 M 棟導航
+            </Link>
+          </div>
+        </div>
+
+        <div className="rounded-[32px] border border-[var(--line)] bg-[var(--surface)] px-5 py-6 shadow-[0_24px_80px_rgba(15,23,42,0.06)] sm:px-8 sm:py-8">
+          <p className="text-sm font-medium uppercase tracking-[0.18em] text-slate-500">
+            Guide Scope
+          </p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+            <div className="rounded-[24px] border border-slate-200/80 bg-white/90 p-4">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Screen 1
+              </p>
+              <p className="mt-2 text-lg font-semibold tracking-tight text-slate-900">
+                校園總覽
+              </p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                先看入口、校區分帶、接駁站與教室代碼邏輯。
+              </p>
+            </div>
+            <div className="rounded-[24px] border border-slate-200/80 bg-white/90 p-4">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Screen 2
+              </p>
+              <p className="mt-2 text-lg font-semibold tracking-tight text-slate-900">
+                室內帶路
+              </p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                保留既有 QR-style 起點、逐步導引與小地圖策略。
+              </p>
+            </div>
+            <div className="rounded-[24px] border border-slate-200/80 bg-white/90 p-4">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Screen 3
+              </p>
+              <p className="mt-2 text-lg font-semibold tracking-tight text-slate-900">
+                交通選擇
+              </p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">
+                把公車、高鐵、開車與停車備援一起收進同一頁。
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
